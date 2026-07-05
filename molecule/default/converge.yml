@@ -1,0 +1,51 @@
+---
+# molecule/default/converge.yml
+# SPDX-License-Identifier: MIT
+#
+# The converge.yml file is the Ansible playbook Molecule uses to run roles and collections
+# across the containers / VM's it builds. Anything you'd normally configure for roles in
+# the playbook.yml file can be set here.
+
+- name: Converge
+  hosts: all
+  gather_facts: true
+  pre_tasks:
+    # This block was taken directly from: https://github.com/geerlingguy/ansible-role-docker/blob/master/molecule/default/converge.yml#L6
+    - name: Wait for systemd to complete initialization  # noqa command-instead-of-module
+      command: systemctl is-system-running
+      register: systemctl_status
+      until: >
+        'running' in systemctl_status.stdout or
+        'degraded' in systemctl_status.stdout
+      retries: 5
+      delay: 2
+      when: ansible_facts['service_mgr'] == 'systemd'
+      changed_when: false
+      failed_when: systemctl_status.rc > 1
+
+    # Review useful environment facts for debugging, add more as needed
+    - name: Enumerate Ansible Facts
+      ansible.builtin.debug:
+        msg:
+          - "system: {{ ansible_facts['system'] }}"
+          - "os_family: {{ ansible_facts['os_family'] }}"
+          - "distribution: {{ ansible_facts['distribution'] }}"
+          - "release: {{ ansible_facts['distribution_release'] }}"
+          - "version: {{ ansible_facts['distribution_version'] }}"
+          - "pkg_mgr: {{ ansible_facts['pkg_mgr'] }}"
+          - "python_version: {{ ansible_facts['python_version'] }}"
+          - "user_id: {{ ansible_facts['user_id'] }}"
+          - "user_uid: {{ ansible_facts['user_uid'] }}"
+          - "user_gid: {{ ansible_facts['user_gid'] }}"
+          - "real_user_id: {{ ansible_facts['real_user_id'] }}"
+          - "real_group_id: {{ ansible_facts['real_group_id'] }}"
+
+# Tasks here execute after the role
+#  tasks:
+#    - name: Enumerate Ansible Facts
+#      ansible.builtin.debug:
+#        # msg: "This is the effective test"
+#        var: ansible_facts['system']
+
+  roles:
+    - role: straysheep_dev.role_name
