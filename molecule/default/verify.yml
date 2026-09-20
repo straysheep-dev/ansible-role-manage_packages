@@ -1,0 +1,47 @@
+---
+# molecule/default/verify.yml
+# SPDX-License-Identifier: MIT
+
+- name: Verify
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Gather installed package facts
+      ansible.builtin.package_facts:
+
+    - name: Assert tmux was installed
+      ansible.builtin.assert:
+        that:
+          - "'tmux' in ansible_facts.packages"
+        fail_msg: "tmux should have been installed (apt_install/dnf_install)"
+
+    - name: Assert nmap was removed
+      ansible.builtin.assert:
+        that:
+          - "'nmap' not in ansible_facts.packages"
+        fail_msg: "nmap should have been removed (apt_remove/dnf_remove)"
+
+    - name: Resolve a throwaway snap/flatpak list to check merge/dedupe logic
+      ansible.builtin.include_role:
+        name: straysheep_dev.manage_packages
+        tasks_from: resolve-lists
+      vars:
+        manage_packages_apt_install: []
+        manage_packages_apt_remove: []
+        manage_packages_dnf_install: []
+        manage_packages_dnf_remove: []
+        manage_packages_snap_install:
+          - firefox
+          - firefox
+        manage_packages_snap_remove: []
+        manage_packages_flatpak_install:
+          - org.mozilla.firefox
+          - org.mozilla.firefox
+        manage_packages_flatpak_remove: []
+
+    - name: Assert the snap/flatpak resolved lists merged and deduped correctly
+      ansible.builtin.assert:
+        that:
+          - manage_packages_resolved_snap_install == ['firefox']
+          - manage_packages_resolved_flatpak_install == ['org.mozilla.firefox']
+        fail_msg: "resolve-lists.yml should merge/de-dupe snap+flatpak too"

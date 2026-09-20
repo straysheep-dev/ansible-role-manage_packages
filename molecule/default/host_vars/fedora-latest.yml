@@ -6,3 +6,8 @@
 # unique usage of the role that verify.yml can test.
 #
 # https://docs.ansible.com/projects/ansible/latest/inventory_guide/intro_inventory.html#organizing-host-and-group-variables
+
+manage_packages_dnf_install:
+  - tmux
+manage_packages_dnf_remove:
+  - nmap

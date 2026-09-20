@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: MIT
+---
+# manage_packages/tasks/snap.yml
+
+- name: Install snap packages
+  community.general.snap:
+    name: "{{ manage_packages_resolved_snap_install }}"
+    state: present
+  when: manage_packages_resolved_snap_install | length > 0
+  become: true
+  become_method: ansible.builtin.sudo
+
+- name: Remove snap packages
+  community.general.snap:
+    name: "{{ manage_packages_resolved_snap_remove }}"
+    state: absent
+  when: manage_packages_resolved_snap_remove | length > 0
+  become: true
+  become_method: ansible.builtin.sudo

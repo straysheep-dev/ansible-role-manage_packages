@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: MIT
+---
+# manage_packages/tasks/dnf.yml
+
+- name: Install dnf packages
+  ansible.builtin.dnf:
+    name: "{{ manage_packages_resolved_dnf_install }}"
+    state: present
+    update_cache: true
+  when: manage_packages_resolved_dnf_install | length > 0
+  become: true
+  become_method: ansible.builtin.sudo
+
+- name: Remove dnf packages
+  ansible.builtin.dnf:
+    name: "{{ manage_packages_resolved_dnf_remove }}"
+    state: absent
+  when: manage_packages_resolved_dnf_remove | length > 0
+  become: true
+  become_method: ansible.builtin.sudo

@@ -1,9 +1,23 @@
-role_name
+manage_packages
 =========
 
-![molecule workflow](https://github.com/straysheep-dev/ansible-role-template/actions/workflows/molecule.yml/badge.svg) ![ansible-lint workflow](https://github.com/straysheep-dev/ansible-role-template/actions/workflows/ansible-lint.yml/badge.svg)
+![molecule workflow](https://github.com/straysheep-dev/ansible-role-manage_packages/actions/workflows/molecule.yml/badge.svg) ![ansible-lint workflow](https://github.com/straysheep-dev/ansible-role-manage_packages/actions/workflows/ansible-lint.yml/badge.svg)
 
-A brief description of the role goes here.
+This role is a mechanism to centralize basic package inventories. Predefined lists of packages to install or remove are here for specific system roles. You can extend and override everything using the variables provided.
+
+| Package Manager | Status |
+| --- | --- |
+| apt | ✅ |
+| dnf | ✅ |
+| yum | ❌ |
+| apk | ❌ |
+| pkg | ❌ |
+| pacman | ❌ |
+| Snap | ✅ |
+| Flatpak | ✅ |
+| Winget | ❌ |
+
+This role does not handle packages that require specific configuration (e.g. Sysmon, auditd) or packages that may need unique arguments to install (e.g. `pipx install --include-deps ansible`). Instead, use dedicated roles for such packages, with the goal being to define your complete builds in Ansible inventory vars. This role effectively creates the variable space in your inventory to store just what needs added or removed.
 
 > [!NOTE]
 > 1. To initialize submodules in this template, do: `git submodule update --init --recursive`
@@ -24,31 +38,22 @@ A brief description of the role goes here.
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+# TODO
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+# TODO
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+# TODO
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-```yml
-- name: "Default Playbook"
-  hosts: all
-    #some_group
-  roles:
-    - role: straysheep_dev.role_name
-```
-
+# TODO
 
 License
 -------
@@ -59,3 +64,8 @@ Author Information
 ------------------
 
 [straysheep-dev/ansible-configs](https://github.com/straysheep-dev/ansible-configs)
+
+> [!NOTE]
+> **AI-assisted Authorship**
+>
+> Drafts, examples, and research generated using [Claude](https://claude.com/product/overview), both in the web interface and via [Claude Code](https://code.claude.com/docs/en/overview) after ingesting the existing [ansible-configs](https://github.com/straysheep-dev/ansible-configs) codebase and reviewing the direction in a CLAUDE.md file.

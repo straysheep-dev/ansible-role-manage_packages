@@ -1,3 +1,30 @@
 # SPDX-License-Identifier: MIT
 ---
-# tasks file for role_name
+# manage_packages/tasks/main.yml
+
+- name: Resolve active presets into working package lists
+  ansible.builtin.include_tasks: resolve-lists.yml
+
+- name: Install apt packages
+  ansible.builtin.include_tasks: apt.yml
+  when: >-
+    (manage_packages_resolved_apt_install | length > 0) or
+    (manage_packages_resolved_apt_remove | length > 0)
+
+- name: Install dnf packages
+  ansible.builtin.include_tasks: dnf.yml
+  when: >-
+    (manage_packages_resolved_dnf_install | length > 0) or
+    (manage_packages_resolved_dnf_remove | length > 0)
+
+- name: Install snap packages
+  ansible.builtin.include_tasks: snap.yml
+  when: >-
+    (manage_packages_resolved_snap_install | length > 0) or
+    (manage_packages_resolved_snap_remove | length > 0)
+
+- name: Install flatpak packages
+  ansible.builtin.include_tasks: flatpak.yml
+  when: >-
+    (manage_packages_resolved_flatpak_install | length > 0) or
+    (manage_packages_resolved_flatpak_remove | length > 0)

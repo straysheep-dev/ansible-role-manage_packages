@@ -1,3 +1,48 @@
 # SPDX-License-Identifier: MIT
 ---
-# defaults file for role_name
+# defaults file for manage_packages
+
+# These should be defined and maintained in your inventories or playbook rather than here.
+
+# Presets ported from the following roles:
+# - build_ubuntu_desktop and
+# - build_kali_desktop
+# These are defined under vars/main.yml.
+# Select zero or more by name to include here.
+manage_packages_active_presets: []
+#   - ubuntu_desktop_base
+#   - ubuntu_desktop_host
+# ...or a full Kali wireless-assessment build:
+#   - kali_core
+#   - kali_wireless
+
+# Manual overrides for manage_packages_presets, you want to define your own instead.
+manage_packages_presets_extra: {}
+#   ubuntu_desktop_base:      # override: swap the apt list for this preset
+#     apt:
+#       - htop
+#       - tmux
+#   my_lab_baseline:          # extend: using a new key, add to a preset
+#     apt:
+#       - tcpdump
+#       - ripgrep
+#     pipx:
+#       - yamllint
+
+
+# User-defined install/remove lists that *merge* with the resolved manage_packages_active_presets above.
+manage_packages_apt_install: []
+manage_packages_apt_remove: []
+manage_packages_apt_remove_purge: true
+
+manage_packages_dnf_install: []
+manage_packages_dnf_remove: []
+
+manage_packages_snap_install: []
+manage_packages_snap_remove: []
+
+manage_packages_flatpak_install: []
+manage_packages_flatpak_remove: []
+
+manage_packages_winget_install: []
+manage_packages_winget_remove: []

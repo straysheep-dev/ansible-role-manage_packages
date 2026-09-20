@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: MIT
+---
+# manage_packages/tasks/flatpak.yml
+
+- name: Install flatpak packages
+  community.general.flatpak:
+    name: "{{ manage_packages_resolved_flatpak_install }}"
+    state: present
+    method: system
+  when: manage_packages_resolved_flatpak_install | length > 0
+  become: true
+  become_method: ansible.builtin.sudo
+
+- name: Remove flatpak packages
+  community.general.flatpak:
+    name: "{{ manage_packages_resolved_flatpak_remove }}"
+    state: absent
+    method: system
+  when: manage_packages_resolved_flatpak_remove | length > 0
+  become: true
+  become_method: ansible.builtin.sudo

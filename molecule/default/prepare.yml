@@ -1,0 +1,15 @@
+---
+# molecule/default/prepare.yml
+# SPDX-License-Identifier: MIT
+
+- name: Prepare
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Pre-install the package the role will remove
+      ansible.builtin.package:
+        name: nmap
+        state: present
+        update_cache: true
+      become: true
+      become_method: ansible.builtin.sudo
