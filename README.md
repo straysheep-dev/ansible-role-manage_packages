@@ -38,22 +38,45 @@ This role does not handle packages that require specific configuration (e.g. Sys
 Requirements
 ------------
 
-# TODO
+- Ansible >= 2.10 (`meta/main.yml`).
+- `community.general` collection for `snap` or `flatpak` install/remove lists.
+- `winget` lists are accepted but not yet used (`tasks/winget.yml` is a stub).
 
 Role Variables
 --------------
 
-# TODO
+All variables are self-documented and live in `defaults/main.yml`. They are safe to leave at their defaults (empty lists / `[]`) if unused.
+
+Presets exist under `vars/main.yml`. Use `manage_packages_active_presets` / `manage_packages_presets_extra` to consume or customize them rather than editing that file directly.
 
 Dependencies
 ------------
 
-# TODO
+None.
 
 Example Playbook
 ----------------
 
-# TODO
+```yml
+- name: Ubuntu base packages
+  hosts: localhost
+  connection: local
+  become: true
+  vars:
+    manage_packages_active_presets:
+      - ubuntu_base
+    # Ad-hoc additions on top of the preset:
+    manage_packages_apt_install:
+      - nmap
+  roles:
+    - role: straysheep_dev.manage_packages
+```
+
+Run it against the current host:
+
+```bash
+ansible-playbook -i "localhost," -c local [--ask-become-pass] [-v] playbook.yml
+```
 
 License
 -------
@@ -69,3 +92,6 @@ Author Information
 > **AI-assisted Authorship**
 >
 > Drafts, examples, and research generated using [Claude](https://claude.com/product/overview), both in the web interface and via [Claude Code](https://code.claude.com/docs/en/overview) after ingesting the existing [ansible-configs](https://github.com/straysheep-dev/ansible-configs) codebase and reviewing the direction in a CLAUDE.md file.
+>
+> Assisted-by: Claude:claude-sonnet-5
+>

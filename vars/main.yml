@@ -11,42 +11,38 @@ manage_packages_presets:
       - cryptsetup
       - curl
       - git
+      - hexedit
       - htop
       - libpam-google-authenticator
       - nmap
+      - openssh-server
+      - pcscd
       - python3-pip
       - python3-venv
       - qrencode
       - resolvconf
+      - scdaemon
       - screen
       - shellcheck
       - tmux
       - wireguard
+    apt_remove:
+      - evince
   ubuntu_desktop_host:
     apt_install:
       - flameshot
-      - hexedit
       - libimage-exiftool-perl
-      - pcscd
-      - scdaemon
       - virt-manager
       - usb-creator-gtk
       - usbguard
-    apt_remove:
-      - evince
   ubuntu_desktop_guest:
     apt_install:
       - dconf-editor
       - dos2unix
-      - hexedit
       - libimage-exiftool-perl
-      - pcscd
       - poppler-utils
-      - scdaemon
       - wireshark
       - yamllint
-    apt_remove:
-      - evince
 
   kali_core:
     apt_install:
