@@ -18,16 +18,14 @@ manage_packages_active_presets: []
 
 # Manual overrides for manage_packages_presets, you want to define your own instead.
 manage_packages_presets_extra: {}
-#   ubuntu_desktop_base:      # override: swap the apt list for this preset
-#     apt:
+#   ubuntu_base:              # override: swap the apt list for this preset
+#     apt_install:
 #       - htop
 #       - tmux
 #   my_lab_baseline:          # extend: using a new key, add to a preset
-#     apt:
+#     apt_install:
 #       - tcpdump
 #       - ripgrep
-#     pipx:
-#       - yamllint
 
 
 # User-defined install/remove lists that *merge* with the resolved manage_packages_active_presets above.
