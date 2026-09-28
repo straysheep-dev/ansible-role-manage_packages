@@ -2,6 +2,16 @@
 ---
 # tasks file for manage_packages: resolve-lists
 
+- name: Merge presets and overrides
+  ansible.builtin.set_fact:
+    manage_packages_effective_presets: "{{ manage_packages_presets | combine(manage_packages_presets_extra, recursive=true) }}"
+
+- name: Assert every active preset name exists
+  ansible.builtin.assert:
+    that: item in manage_packages_effective_presets
+    fail_msg: "manage_packages_active_presets references unknown preset '{{ item }}'"
+  loop: "{{ manage_packages_active_presets }}"
+
 # This step enumerates each preset name (e.g. ubuntu_desktop_base) to
 # preapre to iterate over the install / remove lists it contains.
 - name: Consume the package data for each active preset
