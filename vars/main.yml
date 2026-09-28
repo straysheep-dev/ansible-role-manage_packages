@@ -35,6 +35,9 @@ manage_packages_presets:
       - virt-manager
       - usb-creator-gtk
       - usbguard
+    snap_install:
+      - bitwarden
+      - remmina
   ubuntu_desktop_guest:
     apt_install:
       - dconf-editor
@@ -43,6 +46,9 @@ manage_packages_presets:
       - poppler-utils
       - wireshark
       - yamllint
+    snap_install:
+      - vlc
+      - libreoffice
 
   kali_core:
     apt_install:
